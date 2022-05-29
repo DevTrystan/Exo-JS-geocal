@@ -5,6 +5,10 @@ const button = document.querySelector('#geoloc button');
 const latSpan = document.querySelector('#lat');
 const lonSpan = document.querySelector('#lon');
 
+
+
+
+
 //geolocalisation = Objet qui stock l'information de la position
 //navigator = Api du navigateur
 // getCurrentPosition = methodes qui récupère l'emplacement de l'appareil
@@ -12,22 +16,37 @@ const lonSpan = document.querySelector('#lon');
 //geo_err = function qui renvoi un objet de Objet position error
 
 
-
-
-
-//Position.coords.latitude & longitude = Objet qui renvoi les coordonnées de géolocalisation
-function success(position){
     
-    latSpan.innerHTML = position.coords.latitude;
-    lonSpan.innerHTML = position.coords.longitude;
-     
+       
+function geo_ok(position) {
+  
+    latSpan.textContent = position.coords.latitude;
+    lonSpan.textContent = position.coords.longitude;
+
+   
     }
+  
 
-
-
-function error() {
-    alert("Sorry,nopositionavailable.");
+function geo_error() {
+    alert("Sorry, no position available.");
 }
 
-navigator.geolocation.getCurrentPosition(success,error);
+
+button.addEventListener('click', () => {
+    navigator.geolocation.getCurrentPosition(geo_ok, geo_error);
+    navigator.geolocation.watchPosition(
+        geo_ok,
+        (err)=> console.error(err.message)
+    )
+})
+
+
+
+
+    
+  
+    
+
+
+
 
